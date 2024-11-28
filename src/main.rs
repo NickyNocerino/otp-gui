@@ -1,18 +1,18 @@
 use std::path::PathBuf;
 
 use eframe::egui;
-use egui_file_dialog::FileDialog;
-
+use egui_file_dialog:: FileDialog;
 use otp_exchange::otp::OneTimePad;
 
 struct MyApp {
     pad_select_dialog: FileDialog,
     target_select_dialog: FileDialog,
+    out_select_dialog: FileDialog,
     pad_zip_path: Option<PathBuf>,
     pad_data: Option<OneTimePad>,
     pad_bin: String,
     target_path: Option<PathBuf>,
-    decrypt_target: String,
+    decrypt_target: Option<PathBuf>,
 }
 
 impl MyApp {
@@ -21,11 +21,12 @@ impl MyApp {
             // Create a new file dialog object
             pad_select_dialog: FileDialog::new(),
             target_select_dialog: FileDialog::new(),
+            out_select_dialog: FileDialog::new(),
             pad_zip_path: None,
             pad_data: None,
             pad_bin: "./bin/pad_temp".to_string(),
             target_path: None,
-            decrypt_target: "".to_string(),
+            decrypt_target: None,
         }
     }
 }
@@ -66,13 +67,24 @@ impl eframe::App for MyApp {
                 }
 
                 if self.target_path.clone().is_some() {
-                    ui.label(format!("target path: {:?}", self.target_path.clone().unwrap()));
-                    ui.label("What Would You Like To Name The Decrypted File?");
-                    let response = ui.add(egui::TextEdit::singleline(&mut self.decrypt_target));
-                    if response.lost_focus() && ui.input(|i| i.key_pressed(egui::Key::Enter)) {
-                        self.pad_data.as_mut().expect("decrypting without a pad").decrypt_file(&self.target_path.clone().unwrap().display().to_string(), &self.decrypt_target);
-                        self.target_path = None;
+                    if ui.button("Select Destination").clicked() {
+                        // Open the file dialog to select a file.
+                        self.out_select_dialog.save_file();
                     }
+
+                    // Update the dialog
+                    self.out_select_dialog.update(ctx);
+
+                    if let Some(path) = self.out_select_dialog.take_selected() {
+                        self.decrypt_target = Some(path.to_path_buf());
+                        self.pad_data.as_mut().expect("decrypting without a pad").decrypt_file(
+                            &self.target_path.clone().unwrap().display().to_string(),
+                            &self.decrypt_target.clone().unwrap().display().to_string(),
+                        );
+                        self.target_path = None;
+                        self.decrypt_target = None;
+                    }
+
                 }
             }
         });
