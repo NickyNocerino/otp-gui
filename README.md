@@ -19,7 +19,7 @@ MAC and UBUNTU
    - this can be done by cloning (via https or ssh) or downloading a zip file
    - 2.5) if neccessary you can change the brnach of otp-echange use to macth the
      pad's size
-       - legal branches at this time are [main, 10KB, 10MB, 1GB, 10GB]
+       - legal branches at this time are [main, 10MB, 1GB, 10GB]
 3) navigate to the root directory of this repository in the terminal
 4) build and run with cargo byt running this command
    - cargo run --release
