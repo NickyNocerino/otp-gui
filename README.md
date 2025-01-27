@@ -17,8 +17,8 @@ MAC and UBUNTU
        - source ~/.cargo/env
 2) download this repository
    - this can be done by cloning (via https or ssh) or downloading a zip file
-   - 2.5) if neccessary you can change the brnach of otp-echange use to macth the
-     pad's size
+   - 2.5) if neccessary you can change the branch of otp-echange use to match
+     pad's size in the Cargo.toml file
        - legal branches at this time are [main, 10MB, 1GB, 10GB]
 3) navigate to the root directory of this repository in the terminal
 4) build and run with cargo byt running this command
