@@ -3,6 +3,7 @@ AUTHOR: NICKY NOCERINO
 TIMEPSTAMP: Sun Jan 26 2025 20:09:42 GMT-0500 (Eastern Standard Time)
 
 OTP GUI
+
 A minimalistic gui for one time pad file encryption and decryption
 built on the otp-exchange rust package
 
