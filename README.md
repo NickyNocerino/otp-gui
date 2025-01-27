@@ -20,7 +20,7 @@ MAC and UBUNTU
      pad's size
        - legal branches at this time are [main, 10KB, 10MB, 1GB, 10GB]
 3) navigate to the root directory of this repository in the terminal
-4) build and run with cargo
+4) build and run with cargo byt running this command
    - cargo run --release
 5) after the project compiles and runs, a gui window will pop up
    - select your pad from anywhere in the machines file tree
