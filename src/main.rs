@@ -1,5 +1,9 @@
 use std::path::PathBuf;
 
+pub mod helpers;
+
+use helpers::pretty_bytes;
+
 use eframe::egui;
 use egui_file_dialog:: FileDialog;
 use otp_exchange::otp::OneTimePad;
@@ -53,7 +57,7 @@ impl eframe::App for MyApp {
                 if !self.pad_data.is_some() {
                     self.pad_data = Some(OneTimePad::load_zip(&self.pad_zip_path.clone().unwrap().display().to_string(), &self.pad_bin));
                 }
-                ui.label(format!("{:?} Bytes of Pad Remain", self.pad_data.as_ref().unwrap().remaining()));
+                ui.label(format!("{} of Pad Remain", pretty_bytes(self.pad_data.as_ref().unwrap().remaining() as f64)));
                 if ui.button("Select Target File").clicked() {
                     // Open the file dialog to select a file.
                     self.target_select_dialog.select_file();
